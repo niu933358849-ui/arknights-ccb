@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111820">
+  <meta name="description" content="明日方舟之CCB：通过干员名片上的标签对照，猜出正确的干员。">
+  <title>明日方舟之CCB — 干员猜猜看</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="topbar"><a class="wordmark" href="#top"><span class="wordmark-text">RHODES ISLAND<small>罗德岛 · 干员档案终端</small></span></a><div class="topbar-status"><span class="live-dot"></span> CCB GAME SYSTEM <b>ONLINE</b></div></header>
+  <main id="top">
+    <section class="hero"><div class="hero-copy"><div class="overline"><span>罗德岛人事部 / OPERATOR GUESSING GAME</span><span class="overline-line"></span><span>CCB — 01</span></div><h1>明日方舟<br><em>之CCB</em><sup>®</sup></h1><p>通过猜测名片上的标签对照，<br>找出这位罗德岛干员。</p><div class="hero-coordinates">COMPARE OPERATOR TAGS · WHO IS THE OPERATOR? <span>✳</span> GOOD LUCK, DOCTOR.</div></div><div class="hero-art" aria-hidden="true"><div class="hero-ring ring-a"></div><div class="hero-ring ring-b"></div><div class="hero-ring ring-c"></div><div class="hero-cross">✳</div><div class="hero-word">WHO<br><b>AM I?</b></div><div class="hero-big-r">?</div><div class="hero-coordinate coord-a">IDENTITY / REDACTED</div><div class="hero-coordinate coord-b">FILE<br>NO. ?????</div><div class="hero-corner"></div></div><div class="hero-index"><span>01</span><span class="index-rule"></span><span>干员猜猜看</span></div></section>
+    <section class="game-area" aria-labelledby="game-heading"><div class="game-heading"><div><p class="section-kicker">IDENTIFICATION PROTOCOL / CCB</p><h2 id="game-heading">谁是这位干员？ <span>WHO'S THAT OPERATOR?</span></h2></div><div class="data-status"><span class="live-dot"></span><span id="data-status">正在载入档案…</span></div></div>
+      <div class="difficulty-row"><span>选择挑战范围 <small>CHALLENGE MODE</small></span><div class="difficulty-switch" role="group" aria-label="选择游戏难度"><button class="difficulty-button" type="button" data-difficulty="six" aria-pressed="false">六星干员 <small>6★ ONLY</small></button><button class="difficulty-button active" type="button" data-difficulty="all" aria-pressed="true">全部干员 <small>ALL OPERATORS</small></button></div></div>
+      <div class="game-layout"><aside class="guess-panel"><div class="guess-label"><span>SUBJECT IDENTIFICATION</span><span class="target-blip">● ● ●</span></div><h3>提交你的猜测</h3><p>按职业、地区或稀有度快速筛选，也可以直接输入干员名称。选中后提交猜测；猜错 10 次后公布答案。</p><form id="guess-form" autocomplete="off"><label class="guess-input-wrap" for="guess-input"><span>⌕</span><input id="guess-input" type="text" placeholder="搜索干员 / 职业 / 地区 / 稀有度…" aria-label="输入干员名称、职业、地区或稀有度" aria-controls="operator-results" aria-autocomplete="list" aria-expanded="false"><button id="clear-input" type="button" aria-label="清空输入" hidden>×</button></label><div class="search-shortcuts" role="group" aria-label="快速筛选"><span>职业</span><button type="button" data-search-query="先锋">先锋</button><button type="button" data-search-query="近卫">近卫</button><button type="button" data-search-query="重装">重装</button><button type="button" data-search-query="狙击">狙击</button><button type="button" data-search-query="术师">术师</button><button type="button" data-search-query="医疗">医疗</button><button type="button" data-search-query="辅助">辅助</button><button type="button" data-search-query="特种">特种</button><span class="shortcut-divider"></span><button type="button" data-search-query="地区">地区</button><button type="button" data-search-query="六星">六星</button></div><div id="operator-results" class="operator-results" role="listbox" aria-label="检索结果" hidden></div><button class="submit-button" type="submit">提交猜测 <span>↗</span></button><button class="give-up-button" id="give-up-button" type="button" disabled>放弃猜测并公布答案</button></form><div class="guess-feedback" id="guess-feedback" aria-live="polite"></div><div class="round-meter"><div class="round-meter-heading"><span>本轮错误次数</span><strong id="miss-count">0 <i>/ 10</i></strong></div><div class="miss-track" aria-label="错误次数进度"><span id="miss-fill"></span></div><div class="miss-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="game-progress"><div><span>尚未猜过的干员</span><strong id="candidate-count">—</strong></div><div class="progress-track"><span id="progress-fill"></span></div><span id="round-status">等待开始</span></div></div>
+        </aside></div>
+      <div class="game-bottom"><div class="tag-legend"><span><i class="legend-dot official"></i>游戏内标签</span><span><i class="legend-dot profile"></i>档案信息</span><span><i class="legend-dot personality"></i>档案性格（原文归纳）</span><span><i class="legend-dot moegirl"></i>萌娘百科萌点（独立线索）</span></div><button class="new-game-button" id="new-game-button" type="button">重新开始 <span>⟳</span></button></div>
+      <section class="guess-history" id="guess-history" aria-live="polite" hidden>
+        <div class="history-heading"><div><p class="section-kicker">OPERATOR FILES / GUESS LOG</p><h3>本局猜测记录</h3></div><div class="match-legend"><span><i class="match-swatch same"></i>与答案相同</span><span><i class="match-swatch different"></i>与答案不同</span></div></div>
+        <div class="guess-cards" id="guess-cards"></div>
+      </section>
+      <p class="source-note">游戏内信息取自<a href="https://github.com/Kengxxiao/ArknightsGameData" target="_blank" rel="noopener noreferrer">公开游戏数据表 ↗</a>；人物萌点标签按需读取<a href="https://moegirl.uk/明日方舟/干员" target="_blank" rel="noopener noreferrer">萌娘百科 ↗</a>对应条目。图片使用鹰角官方游戏资源 CDN。</p>
+    </section>
+  </main>
+  <details class="music-dock" id="music-dock">
+    <summary><span class="music-summary-icon">♫</span><span>罗德岛音乐终端</span><span class="music-live" id="music-live">待机</span></summary>
+    <div class="music-panel">
+      <div class="music-panel-title"><div><small>RHODES ISLAND / AUDIO</small><strong id="music-now-playing">选择背景音乐</strong></div><span class="music-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+      <label class="music-field">曲库<select id="music-category"><option value="all">全部官方曲目</option><option value="ost">游戏原声 OST</option><option value="single">塞壬唱片单曲 / EP</option></select></label>
+      <label class="music-field">搜索曲目<input id="music-search" type="search" placeholder="输入曲名或专辑名…"></label>
+      <label class="music-field">选择曲目<select id="music-track"><option value="">正在连接塞壬唱片曲库…</option></select></label>
+      <div class="music-controls"><button id="music-prev" type="button" aria-label="上一首">|◀</button><button id="music-toggle" type="button" aria-label="播放背景音乐">▶ 播放</button><button id="music-next" type="button" aria-label="下一首">▶|</button><label class="volume-control" title="音量">♪ <input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.25" aria-label="背景音乐音量"></label></div>
+      <div class="music-foot"><span id="music-status" aria-live="polite">选择曲目后点击播放</span><a href="https://monster-siren.hypergryph.com/music" target="_blank" rel="noopener noreferrer">塞壬唱片 ↗</a></div>
+    </div>
+  </details>
+  <audio id="bgm-audio" preload="none"></audio>
+  <footer><a class="footer-brand" href="#top">RHODES ISLAND</a><p>非官方粉丝制作 · 《明日方舟》相关角色名称与设定归原版权方所有</p><a href="#top">返回顶部 ↑</a></footer>
+  <script src="script.js"></script>
+</body>
+</html>
