@@ -16,9 +16,9 @@
 .match-swatch{width:10px;height:10px;border-radius:50%;display:inline-block}
 .match-swatch.same{background:#68c58a}.match-swatch.different{background:#e57870}
 .guess-cards{display:grid;gap:10px}
-.operator-card{display:grid;grid-template-columns:112px minmax(0,1fr);min-height:145px;border:1px solid #3a4852;background:#18232c;animation:clue-in .25s both}
-.operator-card-image{position:relative;overflow:hidden;min-height:145px;background:linear-gradient(145deg,#263641,#111a21);display:grid;place-items:center;color:#d5d9d0;font:700 48px var(--display)}
-.operator-card-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.operator-card{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:380px;border:1px solid #3a4852;background:#18232c;animation:clue-in .25s both}
+.operator-card-image{position:relative;overflow:hidden;min-height:380px;background:linear-gradient(145deg,#263641,#111a21);display:grid;place-items:center;color:#d5d9d0;font:700 48px var(--display)}
+.operator-card-image img{position:absolute;inset:0;width:100%;height:100%;padding:10px 0;object-fit:contain;object-position:center top}
 .operator-card-image span{opacity:.55}
 .operator-card-image img~span{opacity:0}
 .operator-card-image.image-missing span{opacity:.75}
@@ -53,7 +53,7 @@ body{font-size:16px}
   .topbar-status{font-size:10px}.overline{font-size:9px}.hero-copy>p{font-size:15px}.hero-coordinates{font-size:8px}.hero h1{font-size:68px}
   .game-heading h2{font-size:19px}.game-heading h2 span{font-size:9px}.data-status{font-size:10px}.difficulty-row>span{font-size:13px}.difficulty-row>span small{font-size:9px}.difficulty-button{font-size:13px}.difficulty-button small{font-size:9px}
   .console-head{font-size:11px}.clue-list{grid-template-columns:1fr}.clue-text strong{font-size:14px}.clue-text small{font-size:10px}.console-footer{font-size:9px}.guess-panel h3{font-size:18px}.guess-panel>p{font-size:13px}.game-bottom{gap:12px}.tag-legend>span{font-size:10px}.source-note{font-size:10px}
-  .history-heading{align-items:flex-start;flex-direction:column}.history-heading h3{font-size:18px}.match-legend{font-size:11px}.operator-card{grid-template-columns:84px minmax(0,1fr)}.operator-card-image{min-height:130px}.operator-card-content{padding:10px}.operator-card-title h4{font-size:16px}.operator-card-title p{font-size:11px}.guess-number{font-size:9px}.operator-tag{font-size:11px;padding:3px 6px}
+  .history-heading{align-items:flex-start;flex-direction:column}.history-heading h3{font-size:18px}.match-legend{font-size:11px}.operator-card{grid-template-columns:150px minmax(0,1fr);min-height:260px}.operator-card-image{min-height:260px}.operator-card-content{padding:10px}.operator-card-title h4{font-size:16px}.operator-card-title p{font-size:11px}.guess-number{font-size:9px}.operator-tag{font-size:11px;padding:3px 6px}
 }
 /* Searchable operator picker */
 .guess-input-wrap{position:relative;z-index:3}

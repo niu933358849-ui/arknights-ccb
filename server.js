@@ -55,7 +55,7 @@ async function proxySiren(pathname, response) {
 }
 
 async function proxyOperatorImage(pathname, response) {
-  const match = pathname.match(/^\/api\/operator-image\/(portrait|avatar)\/([^/]+)$/);
+  const match = pathname.match(/^\/api\/operator-image\/(full|portrait|avatar)\/([^/]+)$/);
   if (!match) {
     response.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
     response.end('Unknown operator image');
@@ -75,10 +75,22 @@ async function proxyOperatorImage(pathname, response) {
     return;
   }
   try {
-    const upstream = await fetch(`https://web.hycdn.cn/arknights/game/assets/char/${match[1]}/${encodeURIComponent(operatorId)}.png`, {
-      headers: { accept: 'image/png,image/*;q=0.9,*/*;q=0.8' },
-      signal: AbortSignal.timeout(15000),
-    });
+    const encodedId = encodeURIComponent(operatorId);
+    const sources = match[1] === 'full'
+      ? [
+          `https://raw.githubusercontent.com/ArknightsAssets/ArknightsAssets2/cn/assets/dyn/arts/charportraits/${encodedId}_1.png`,
+          `https://raw.githubusercontent.com/ArknightsAssets/ArknightsAssets2/cn/assets/dyn/arts/charportraits/${encodedId}.png`,
+          `https://web.hycdn.cn/arknights/game/assets/char/portrait/${encodedId}.png`,
+        ]
+      : [`https://web.hycdn.cn/arknights/game/assets/char/${match[1]}/${encodedId}.png`];
+    let upstream;
+    for (const source of sources) {
+      upstream = await fetch(source, {
+        headers: { accept: 'image/png,image/*;q=0.9,*/*;q=0.8' },
+        signal: AbortSignal.timeout(15000),
+      });
+      if (upstream.ok || (upstream.status !== 404 && upstream.status !== 410)) break;
+    }
     const body = Buffer.from(await upstream.arrayBuffer());
     response.writeHead(upstream.status, {
       'content-type': upstream.headers.get('content-type') || 'image/png',

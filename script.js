@@ -132,7 +132,7 @@ function operatorImageUrl(kind,operator){
   const base=isLocalSite&&location.port!=='8001'?`${location.protocol}//127.0.0.1:8001/api/operator-image`:'/api/operator-image';
   return `${base}/${kind}/${encodeURIComponent(operator.id)}`;
 }
-function portraitUrl(operator){return operatorImageUrl('portrait',operator);}
+function portraitUrl(operator){return operatorImageUrl('full',operator);}
 function avatarUrl(operator){return operatorImageUrl('avatar',operator);}
 
 function renderGuesses(){
