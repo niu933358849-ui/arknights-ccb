@@ -54,6 +54,44 @@ async function proxySiren(pathname, response) {
   }
 }
 
+async function proxyOperatorImage(pathname, response) {
+  const match = pathname.match(/^\/api\/operator-image\/(portrait|avatar)\/([^/]+)$/);
+  if (!match) {
+    response.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+    response.end('Unknown operator image');
+    return;
+  }
+  let operatorId;
+  try {
+    operatorId = decodeURIComponent(match[2]);
+  } catch {
+    response.writeHead(400);
+    response.end('Bad operator id');
+    return;
+  }
+  if (!/^char_[a-zA-Z0-9_@#-]+$/.test(operatorId)) {
+    response.writeHead(400);
+    response.end('Bad operator id');
+    return;
+  }
+  try {
+    const upstream = await fetch(`https://web.hycdn.cn/arknights/game/assets/char/${match[1]}/${encodeURIComponent(operatorId)}.png`, {
+      headers: { accept: 'image/png,image/*;q=0.9,*/*;q=0.8' },
+      signal: AbortSignal.timeout(15000),
+    });
+    const body = Buffer.from(await upstream.arrayBuffer());
+    response.writeHead(upstream.status, {
+      'content-type': upstream.headers.get('content-type') || 'image/png',
+      'cache-control': upstream.ok ? 'public, max-age=86400, stale-while-revalidate=604800' : 'no-store',
+      'x-content-type-options': 'nosniff',
+    });
+    response.end(body);
+  } catch (error) {
+    response.writeHead(502, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
+    response.end(JSON.stringify({ error: 'Official operator image is temporarily unavailable', message: error.message }));
+  }
+}
+
 http.createServer(async (request, response) => {
   const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
   if (pathname === '/healthz') {
@@ -63,6 +101,10 @@ http.createServer(async (request, response) => {
   }
   if (pathname.startsWith('/api/msr/')) {
     await proxySiren(pathname, response);
+    return;
+  }
+  if (pathname.startsWith('/api/operator-image/')) {
+    await proxyOperatorImage(pathname, response);
     return;
   }
 

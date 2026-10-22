@@ -126,8 +126,14 @@ function renderOperatorTagGroups(operator,answerTags){
   }).join('');
 }
 
-function portraitUrl(operator){return operator.id?`https://web.hycdn.cn/arknights/game/assets/char/portrait/${encodeURIComponent(operator.id)}.png`:'';}
-function avatarUrl(operator){return operator.id?`https://web.hycdn.cn/arknights/game/assets/char/avatar/${encodeURIComponent(operator.id)}.png`:'';}
+function operatorImageUrl(kind,operator){
+  if(!operator.id)return '';
+  const isLocalSite=['localhost','127.0.0.1'].includes(location.hostname);
+  const base=isLocalSite&&location.port!=='8001'?`${location.protocol}//127.0.0.1:8001/api/operator-image`:'/api/operator-image';
+  return `${base}/${kind}/${encodeURIComponent(operator.id)}`;
+}
+function portraitUrl(operator){return operatorImageUrl('portrait',operator);}
+function avatarUrl(operator){return operatorImageUrl('avatar',operator);}
 
 function renderGuesses(){
   const history=document.querySelector('#guess-history');const container=document.querySelector('#guess-cards');
